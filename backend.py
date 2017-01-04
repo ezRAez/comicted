@@ -22,3 +22,17 @@ def view():
     conn.close()
     return rows
 
+def search(title = "", author = "", year = "", isbn = ""):
+    conn = sqlite3.connect("comicted.db")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM comic WHERE title=? OR author=? OR year=? OR isbn=?", (title, author, year, isbn))
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def delete(id):
+    conn = sqlite3.connect("comicted.db")
+    cur = conn.cursor()
+    cur.execute("DELETE FROM comic WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
